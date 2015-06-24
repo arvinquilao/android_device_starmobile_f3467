@@ -23,9 +23,12 @@ key 228   POUND
 key 227   STAR
 key 231   CALL
 key 61    CALL
-
+key 232   DPAD_CENTER
+key 108   DPAD_DOWN
+key 103   DPAD_UP
 key 102   HOME
-
+key 105   DPAD_LEFT
+key 106   DPAD_RIGHT
 key 115   VOLUME_UP         WAKE_DROPPED
 key 114   VOLUME_DOWN       WAKE_DROPPED
 key 113   MUTE              WAKE_DROPPED
@@ -84,6 +87,27 @@ key 155   ENVELOPE
 key 12    MINUS
 key 13    EQUALS
 key 215   AT
+
+key 249  SDE_A
+key 250  SDE_B
+key 251  SDE_C
+key 252  SDE_D
+key 253  SDE_E
+key 254  SDE_G
+key 256  SDE_H
+key 257  SDE_M
+key 258  SDE_O
+key 259  SDE_Q
+key 260  SDE_S
+key 261  SDE_V
+key 262  SDE_W
+key 263	 SDE_Y
+key 264  SDE_Z
+key 265  SDE_DOWN
+key 266  SDE_UP
+key 267  SDE_LEFT
+key 268  SDE_RIGHT
+key 269  SDE_ENTER
 
 key 164   MEDIA_PLAY_PAUSE    WAKE
 key 128   MEDIA_STOP          WAKE
