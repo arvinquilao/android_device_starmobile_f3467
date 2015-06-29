@@ -53,7 +53,7 @@ PRODUCT_COPY_FILES += \
     	$(LOCAL_PATH)/rootdir/root/init.mt6582.rc:root/init.mt6582.rc \
     	$(LOCAL_PATH)/rootdir/root/init.project.rc:root/init.project.rc \
     	$(LOCAL_PATH)/rootdir/root/factory_init.rc:root/factory_init.rc \
-    	$(LOCAL_PATH)/rootdir/root/init.fuse.rc:root/init.fuse.rc \
+    	$(LOCAL_PATH)/rootdir/root/init.no_ssd.rc:root/init.no_ssd.rc \
     	$(LOCAL_PATH)/rootdir/root/init.modem.rc:root/init.modem.rc \
     	$(LOCAL_PATH)/rootdir/root/init.xlog.rc:root/init.xlog.rc \
     	$(LOCAL_PATH)/rootdir/root/ueventd.mt6582.rc:root/ueventd.mt6582.rc \
