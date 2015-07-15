@@ -1,11 +1,12 @@
 #
-# system.prop for wiko rainbow
+# system.prop for f3467
 #
 
 ro.hardware=mt6582
 
 service.adb.root=1
-ro.sf.lcd_density=320
+ro.sf.lcd_density=240
+ro.sf.hwrotation=180
 wifi.interface=wlan0
 ro.nfc.port=I2C
 mtknfc.status.type=unknow

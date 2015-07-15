@@ -1,29 +1,10 @@
 import init.mt6582.usb.rc
 import init.modem.rc
+import init.no_ssd.rc
 
 on init
     export LD_PRELOAD /system/lib/libxlog.so
-    export EXTERNAL_STORAGE /storage/sdcard0
-    export SECONDARY_STORAGE /storage/sdcard1
 
-
-
-    mkdir /storage/sdcard0 0700 root root
-    mkdir /storage/sdcard1 0700 root root
-
-    symlink /storage/sdcard0 /sdcard
-    symlink /storage/sdcard0 /mnt/sdcard
-
-    mkdir /mnt/media_rw/sdcard0 0700 media_rw media_rw
-    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-
-
-    # USB OTG
-    mkdir /storage/usbotg 0700 root root
-    mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw
-
-	
-	
     chown system graphics /dev/ion
     chmod 0644 /dev/ion
 
@@ -69,10 +50,19 @@ on init
     chown system media /dev/uibc
     chmod 0660 /dev/uibc
 
+    #/dev/ttyMT2 for Connectivity BT/FM/GPS usage
+    chmod 0660 /dev/ttyMT2
+    chown system system /dev/ttyMT2
+
+    chmod 0660 /dev/ttyMT1
+    chown system system /dev/ttyMT1
+
     # GPS
+    mkdir /data/gps_mnl 0771 gps system
+    mkdir /data/misc/gps 0770 gps system
+    mkdir /data/agps_supl 0771 gps system
     chmod 0666 /dev/gps
     chmod 0660 /dev/stpgps
-    mkdir /data/agps_supl 0771 gps system
     chown gps gps /dev/stpgps
     chown gps gps /sys/class/gpsdrv/gps/pwrctl
     chown gps gps /sys/class/gpsdrv/gps/suspend
@@ -140,7 +130,7 @@ on init
     chmod 0660 /dev/mt_otg_test
 
     chown system media /dev/MTK_SMI
-    chmod 0660 /dev/MTK_SMI
+    chmod 0666 /dev/MTK_SMI
     chown system media /dev/mtk_sched
     chmod 0660 /dev/mtk_sched
     chown system media /dev/ebc
@@ -225,7 +215,7 @@ on init
     chmod 0664 /sys/devices/platform/mt-pmic/pmic_access_bank1
     chmod 0664 /sys/devices/platform/mt6333-user/mt6333_access
     chmod 0664 /sys/devices/platform/mt-pmic/pmic_access
-    chmod 0664 /sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario
+    chmod 0666 /sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario
     chmod 0664 /sys/module/lowmemorykiller/parameters/adj
     chmod 0664 /sys/module/lowmemorykiller/parameters/minfree
     chmod 0660 /sys/power/autosleep
@@ -234,6 +224,16 @@ on init
     chmod 0660 /sys/power/wake_lock
     chmod 0660 /sys/power/wake_unlock
     chmod 0664 /sys/class/leds/lcd-backlight/brightness
+    chown system system /sys/class/leds/keyboard-backlight/brightness
+    chown system radio  /sys/class/leds/lcd-backlight/brightness
+    chown system system /sys/class/leds/button-backlight/brightness
+    chown system system /sys/class/leds/jogball-backlight/brightness
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/red/device/grpfreq
+    chown system system /sys/class/leds/red/device/grppwm
+    chown system system /sys/class/leds/red/device/blink
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/timer_slack   
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
@@ -250,6 +250,16 @@ on init
     chmod 0664 /sys/class/leds/lcd-backlight/brightness
     chmod 0770 /sys/power/tuxonice
     chmod 0220 /sys/power/tuxonice/do_hibernate
+
+    chown root   radio  /sys/class/leds/lcd-backlight/duty
+    chown root   radio  /sys/class/leds/lcd-backlight/div
+    chown system system /sys/class/leds/lcd-backlight/trigger
+    chown system system /sys/class/leds/button-backlight/trigger
+    chown system system /sys/class/leds/keyboard-backlight/trigger
+    chown system system /sys/class/leds/jogball-backlight/trigger
+    chown system system /sys/class/leds/red/trigger
+    chown system system /sys/class/leds/green/trigger
+    chown system system /sys/class/leds/blue/trigger
 
     # FM Radio device node
     mknod /dev/fm     c 193 0;
@@ -268,9 +278,6 @@ on init
     chown system camera /dev/mtk_jpeg
 
 on post-fs-data
-    mkdir /data/media 0770 media_rw media_rw
-    chown media_rw media_rw /data/media
-
     # Create the directories used by the Wireless subsystem
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
@@ -295,15 +302,6 @@ on post-fs-data
     mkdir /data/nfc_socket 0771 nfc radio
 
     start adbd
-
-# GPS
-    chown gps gps /dev/stpgps
-    chown gps gps /sys/class/gpsdrv/gps/pwrctl
-    chown gps gps /sys/class/gpsdrv/gps/suspend
-    chown gps gps /sys/class/gpsdrv/gps/state
-    chown gps gps /sys/class/gpsdrv/gps/pwrsave
-    chown gps gps /sys/class/gpsdrv/gps/status
-    chmod 0660 /dev/stpgps
 
 on post-fs
     exec /system/xbin/mknod /dev/wmtWifi c 153 0
@@ -359,7 +357,6 @@ on fs
     mkdir /protect_s 0771 system system
 
     mount_all /fstab.mt6582
-    setprop ro.crypto.fuse_sdcard true
 
     write /proc/bootprof "INIT:NAND:Mount_END"
 
@@ -446,6 +443,16 @@ service thermal /system/bin/thermal
 service thermald /system/bin/thermald
     user system
     group system
+
+service BGW /system/xbin/BGW
+	user system
+	group gps system radio
+	class main
+
+service MtkCodecService /system/bin/MtkCodecService
+    class main
+    user system
+    group audio media sdcard_r
 
 service mdlogger /system/bin/mdlogger
     class main
@@ -575,27 +582,14 @@ service mc64xxd /system/bin/mc64xxd
 service agpsd /system/bin/mtk_agpsd
     class main
     socket agpsd stream 660 gps system
-    socket agpsd2 stream 660 gps system
-    socket agpsd3 stream 660 gps system
-    user root
-    group gps ccci inet sdcard_r sdcard_rw misc
+    socket agpsd2 stream 660 gps inet
+    socket agpsd3 stream 660 gps inet
+    user gps
+    group gps inet sdcard_r sdcard_rw misc radio
 
 service mnld /system/xbin/mnld
-    user root
-    group nvram gps inet misc sdcard_rw sdcard_r media_rw
+    class main
+    user gps
+    group system gps inet misc sdcard_rw sdcard_r media_rw
     socket mnld stream 660 gps system
-    disabled
 
-
-# virtual sdcard daemon running as media_rw (1023)
-service fuse_sdcard0 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/sdcard0 /storage/sdcard0
-    class late_start
-
-    disabled
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 /mnt/media_rw/sdcard1 /storage/sdcard1
-    class late_start
-    disabled
-
-service fuse_usbotg /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbotg /storage/usbotg
-    class late_start
-    disabled

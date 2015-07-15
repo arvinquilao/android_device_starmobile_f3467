@@ -1,5 +1,8 @@
+LOCAL_PATH := device/starmobile/f3467
+USE_CAMERA_STUB := true
+
 # inherit from the proprietary version
--include vendor/wiko/rainbow/BoardConfigVendor.mk
+-include vendor/starmobile/f3467/BoardConfigVendor.mk
 
 # Board
 TARGET_BOARD_PLATFORM := mt6582
@@ -16,7 +19,7 @@ TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := cortex-a7
 BOARD_HAS_NO_SELECT_BUTTON := true
 
-TARGET_BOOTLOADER_BOARD_NAME := rainbow
+TARGET_BOOTLOADER_BOARD_NAME := f3467
 
 # MTK Hardware
 BOARD_HAS_MTK_HARDWARE := true
@@ -28,11 +31,11 @@ BOARD_GPS_LIBRARIES := true
 
 # Partitions
 # make_ext4fs requires numbers in dec format
-BOARD_BOOTIMAGE_PARTITION_SIZE := 6291456
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8629568
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 891289600
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 2147483648
-BOARD_FLASH_BLOCK_SIZE := 131072
+BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16777216
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 943718400
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 968884224
+BOARD_FLASH_BLOCK_SIZE := 512
 
 TARGET_USERIMAGES_USE_EXT4:=true
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
@@ -50,32 +53,39 @@ TARGET_KMODULES := true
 COMMON_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
-TARGET_PREBUILT_KERNEL := device/wiko/rainbow/kernel
-BOARD_CUSTOM_BOOTIMG_MK := device/wiko/rainbow/bootimg.mk
-BOARD_MKBOOTIMG_ARGS := --board 1336460062
-#TARGET_PREBUILT_RECOVERY_KERNEL :=
+TARGET_RECOVERY_INITRC := $(LOCAL_PATH)/recovery/init.mt6582.rc
+TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery/recovery.fstab
+TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
 
-TARGET_RECOVERY_FSTAB := device/wiko/rainbow/rootdir/root/twrp.fstab
+# PhilZ Touch Recovery
+BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/boot.mk
+#TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness\"
+BOARD_SUPPRESS_EMMC_WIPE := true
+TARGET_RECOVERY_PIXEL_FORMAT := "BGR_565"
+TARGET_USERIMAGES_USE_EXT4 := true
+BOARD_HAS_FLIPPED_SCREEN := true
+#BOARD_USE_MTK_LAYOUT := true
+#BOARD_MTK_BOOT_LABEL := "/bootimg"
+#BOARD_NEEDS_MTK_GETSIZE := true
+#BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_10x18.h\"
+#TARGET_SCREEN_HEIGHT := 800
+#TARGET_SCREEN_WIDTH := 480
+#RECOVERY_VARIANT := philz
+#BRIGHTNESS_SYS_FILE := "/sys/class/leds/lcd-backlight/brightness"
 
-# TWRP
-DEVICE_RESOLUTION := 720x1280
-TARGET_SCREEN_HEIGHT := 1280
-TARGET_SCREEN_WIDTH := 720
+#TWRP
+RECOVERY_VARIANT := twrp
+DEVICE_RESOLUTION := 480x800
+TARGET_USERIMAGES_USE_EXT4 := true
+TW_INTERNAL_STORAGE_PATH := "/data/media"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+TW_EXTERNAL_STORAGE_PATH := "/sdcard"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "sdcard"
+TW_NO_USB_STORAGE := true
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
-TW_NO_REBOOT_BOOTLOADER := true
-TW_BRIGHTNESS_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0/gadget/lun%d/file
-TW_MAX_BRIGHTNESS := 255
-TW_INTERNAL_STORAGE_PATH := "/emmc"
-TW_INTERNAL_STORAGE_MOUNT_POINT := "emmc"
-TW_EXTERNAL_STORAGE_PATH := "/external_sd"
-TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
-TW_CRYPTO_FS_TYPE := "ext4"
-TW_CRYPTO_REAL_BLKDEV := "/dev/block/mmcblk0p7"
-TW_CRYPTO_MNT_POINT := "/data"
-TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,discard,noauto_da_alloc,data=ordered"
-TW_EXCLUDE_SUPERSU := true
-TW_INCLUDE_FB2PNG := true
+TW_IGNORE_MAJOR_AXIS_0 := true
+TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
+TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
 
 # Deodex
 WITH_DEXPREOPT := false
@@ -88,10 +98,10 @@ USE_CAMERA_STUB := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_MTK := true
 BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/wiko/rainbow/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/starmobile/f3467/bluetooth
 
 # EGL settings
-BOARD_EGL_CFG := device/wiko/rainbow/rootdir/configs/egl.cfg
+BOARD_EGL_CFG := device/starmobile/f3467/rootdir/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 
@@ -99,7 +109,7 @@ TARGET_CPU_MEMCPY_OPT_DISABLE := true
 
 # SELINUX
 BOARD_SEPOLICY_DIRS := \
-       device/wiko/rainbow/sepolicy
+       device/starmobile/f3467/sepolicy
 
 BOARD_SEPOLICY_UNION := \
        device.te \
@@ -111,12 +121,14 @@ BOARD_SEPOLICY_UNION := \
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
 # RIL
-BOARD_RIL_CLASS := ../../../device/wiko/rainbow/ril/
+BOARD_RIL_CLASS := ../../../device/starmobile/f3467/ril/
 
 BOARD_CONNECTIVITY_VENDOR := MediaTek
 BOARD_CONNECTIVITY_MODULE := conn_soc
 
 # WIFI
+BOARD_CONNECTIVITY_VENDOR := MediaTek
+BOARD_CONNECTIVITY_MODULE := conn_soc
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_HOSTAPD_DRIVER := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_mt66xx

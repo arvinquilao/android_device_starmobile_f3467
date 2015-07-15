@@ -1,7 +1,0 @@
-#!/sbin/busybox sh
-
-
-cd /
-/sbin/busybox chmod 755 /init2
-/sbin/busybox mv /init2 /init
-exec /init
