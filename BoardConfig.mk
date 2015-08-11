@@ -27,8 +27,6 @@ MTK_HARDWARE := true
 COMMON_GLOBAL_CFLAGS += -DMTK_HARDWARE
 COMMON_GLOBAL_CPPFLAGS += -DMTK_HARDWARE
 
-BOARD_GPS_LIBRARIES := true
-
 # Partitions
 # make_ext4fs requires numbers in dec format
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
@@ -93,6 +91,9 @@ DISABLE_DEXPREOPT := true
 
 #Camera
 USE_CAMERA_STUB := true
+
+#GPS
+TARGET_SPECIFIC_HEADER_PATH := device/starmobile/f3467/include
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true

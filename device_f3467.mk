@@ -50,6 +50,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/starmobile/f3467/rootdir/configs/mtk-kpd.kl:system/usr/keylayout/mtk-kpd.kl
 
+# GPS
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/configs/agps_profiles_conf2.xml:system/etc/agps_profiles_conf2.xml
+
 # RAMDISK
 PRODUCT_COPY_FILES += \
         $(LOCAL_PATH)/rootdir/root//sbin/busybox:root/sbin/busybox \

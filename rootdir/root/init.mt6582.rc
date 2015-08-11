@@ -50,17 +50,7 @@ on init
     chown system media /dev/uibc
     chmod 0660 /dev/uibc
 
-    #/dev/ttyMT2 for Connectivity BT/FM/GPS usage
-    chmod 0660 /dev/ttyMT2
-    chown system system /dev/ttyMT2
-
-    chmod 0660 /dev/ttyMT1
-    chown system system /dev/ttyMT1
-
     # GPS
-    mkdir /data/gps_mnl 0771 gps system
-    mkdir /data/misc/gps 0770 gps system
-    mkdir /data/agps_supl 0771 gps system
     chmod 0666 /dev/gps
     chmod 0660 /dev/stpgps
     chown gps gps /dev/stpgps
@@ -70,7 +60,7 @@ on init
     chown gps gps /sys/class/gpsdrv/gps/pwrsave
     chown gps gps /sys/class/gpsdrv/gps/status
 
-    ## Thermal
+    # Thermal
     #change permissions on thermal devices
     chown root system /proc/mtktscpu/mtktscpu
     chmod 0660 /proc/mtktscpu/mtktscpu
@@ -360,6 +350,9 @@ on fs
 
     write /proc/bootprof "INIT:NAND:Mount_END"
 
+    mkdir /data/agps_supl 0771 gps system
+    mkdir /data/gps_mnl 0771 gps system
+
 on property:wlan.driver.status=ok
 	write /dev/wmtWifi "1"
 
@@ -443,16 +436,6 @@ service thermal /system/bin/thermal
 service thermald /system/bin/thermald
     user system
     group system
-
-service BGW /system/xbin/BGW
-	user system
-	group gps system radio
-	class main
-
-service MtkCodecService /system/bin/MtkCodecService
-    class main
-    user system
-    group audio media sdcard_r
 
 service mdlogger /system/bin/mdlogger
     class main
@@ -582,14 +565,27 @@ service mc64xxd /system/bin/mc64xxd
 service agpsd /system/bin/mtk_agpsd
     class main
     socket agpsd stream 660 gps system
-    socket agpsd2 stream 660 gps inet
-    socket agpsd3 stream 660 gps inet
-    user gps
-    group gps inet sdcard_r sdcard_rw misc radio
+    socket agpsd2 stream 660 gps system
+    socket agpsd3 stream 660 gps system
+    user root
+    group gps ccci inet sdcard_r sdcard_rw misc
+    oneshot
 
 service mnld /system/xbin/mnld
     class main
-    user gps
+    user root
     group system gps inet misc sdcard_rw sdcard_r media_rw
     socket mnld stream 660 gps system
+    oneshot
 
+service wifi2agps /system/bin/wifi2agps
+    class main
+    user root
+    group gps inet
+    oneshot
+
+service BGW /system/xbin/BGW
+    user root
+    group gps system radio
+    class main
+    oneshot
