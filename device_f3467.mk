@@ -60,8 +60,7 @@ PRODUCT_COPY_FILES += \
         $(LOCAL_PATH)/rootdir/root/fstab.mt6582:root/fstab.mt6582 \
     	$(LOCAL_PATH)/rootdir/root/init.recovery.mt6582.rc:root/init.recovery.mt6582.rc \
     	$(LOCAL_PATH)/rootdir/root/init.mt6582.rc:root/init.mt6582.rc \
-      	$(LOCAL_PATH)/rootdir/root/factory_init.rc:root/factory_init.rc \
-    	$(LOCAL_PATH)/rootdir/root/init.no_ssd.rc:root/init.no_ssd.rc \
+      	$(LOCAL_PATH)/rootdir/root/init.no_ssd.rc:root/init.no_ssd.rc \
     	$(LOCAL_PATH)/rootdir/root/init.modem.rc:root/init.modem.rc \
     	$(LOCAL_PATH)/rootdir/root/ueventd.mt6582.rc:root/ueventd.mt6582.rc \
     	$(LOCAL_PATH)/rootdir/root/init.mt6582.usb.rc:root/init.mt6582.usb.rc \

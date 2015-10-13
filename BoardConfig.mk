@@ -38,7 +38,7 @@ BOARD_FLASH_BLOCK_SIZE := 512
 TARGET_USERIMAGES_USE_EXT4:=true
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
 
-BOARD_KERNEL_CMDLINE :=
+BOARD_KERNEL_CMDLINE := androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x10000000
 BOARD_KERNEL_PAGESIZE := 2048
 
@@ -55,13 +55,15 @@ TARGET_RECOVERY_INITRC := $(LOCAL_PATH)/recovery/init.mt6582.rc
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery/recovery.fstab
 TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
 
-# PhilZ Touch Recovery
+#Recovery common flags
 BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/boot.mk
-#TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness\"
 BOARD_SUPPRESS_EMMC_WIPE := true
 TARGET_RECOVERY_PIXEL_FORMAT := "BGR_565"
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_FLIPPED_SCREEN := true
+
+# PhilZ Touch Recovery
+#TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brightness\"
 #BOARD_USE_MTK_LAYOUT := true
 #BOARD_MTK_BOOT_LABEL := "/bootimg"
 #BOARD_NEEDS_MTK_GETSIZE := true
@@ -73,7 +75,7 @@ BOARD_HAS_FLIPPED_SCREEN := true
 
 #TWRP
 RECOVERY_VARIANT := twrp
-DEVICE_RESOLUTION := 480x800
+TW_THEME := portrait_mdpi
 TARGET_USERIMAGES_USE_EXT4 := true
 TW_INTERNAL_STORAGE_PATH := "/data/media"
 TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
