@@ -56,7 +56,7 @@ PRODUCT_COPY_FILES += \
 
 # RAMDISK
 PRODUCT_COPY_FILES += \
-        $(LOCAL_PATH)/rootdir/root//sbin/busybox:root/sbin/busybox \
+        $(LOCAL_PATH)/rootdir/root/sbin/busybox:root/sbin/busybox \
         $(LOCAL_PATH)/rootdir/root/fstab.mt6582:root/fstab.mt6582 \
     	$(LOCAL_PATH)/rootdir/root/init.recovery.mt6582.rc:root/init.recovery.mt6582.rc \
     	$(LOCAL_PATH)/rootdir/root/init.mt6582.rc:root/init.mt6582.rc \
