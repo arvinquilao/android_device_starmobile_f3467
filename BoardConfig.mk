@@ -105,7 +105,7 @@ BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/starmobile/f3467/bluetooth
 
 # EGL settings
-BOARD_EGL_CFG := device/starmobile/f3467/rootdir/configs/egl.cfg
+BOARD_EGL_CFG := device/starmobile/f3467/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 
