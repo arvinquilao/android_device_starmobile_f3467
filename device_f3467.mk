@@ -28,7 +28,7 @@ PRODUCT_PACKAGES += \
 #AUDIO
 PRODUCT_PACKAGES += \
     audio.r_submix.default \
-    audio_policy.default \
+    audio_policy.default
     
 #BLUETOOTH
 PRODUCT_PACKAGES += \
@@ -109,8 +109,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny
 
 $(call inherit-product, build/target/product/full.mk)
-
-USE_CUSTOM_AUDIO_POLICY := 1
 
 PRODUCT_PROPERTY_OVERRIDES += \
     	ro.cwm.forbid_format=/nvram,/uboot \
