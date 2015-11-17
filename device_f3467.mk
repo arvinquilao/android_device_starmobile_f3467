@@ -21,21 +21,20 @@ endif
 PRODUCT_PACKAGES += \
     libxlog
 
+#LED LIGHT
 PRODUCT_PACKAGES += \
     lights.mt6582
 
+#AUDIO
 PRODUCT_PACKAGES += \
-    audio.r_submix.default
-
+    audio.r_submix.default \
+    audio_policy.default \
+    
+#BLUETOOTH
 PRODUCT_PACKAGES += \
-    audio.primary.mt6582
-
-PRODUCT_PACKAGES += \
-    audio_policy.default
-
-PRODUCT_PACKAGES += \
-    libbt-vendor
-
+    libbt-vendor \
+    audio.a2dp.default
+    
 PRODUCT_PACKAGES += \
     gsm0710muxd
 
@@ -104,6 +103,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny
 
 $(call inherit-product, build/target/product/full.mk)
+
+USE_CUSTOM_AUDIO_POLICY := 1
 
 PRODUCT_PROPERTY_OVERRIDES += \
     	ro.cwm.forbid_format=/nvram,/uboot \
